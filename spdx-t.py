@@ -165,7 +165,7 @@ def spdxpackage(self):
         a += "PackageLicenseConcluded: " + i + "\n"
 
     #a += "PackageCopyrightText: " + "<text> 2021 - 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>" + "\n"
-    a += "PackageCopyrightText: " + "<text> 2021 - 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>" + "\n"
+    a += "PackageCopyrightText: " + "<text> 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>" + "\n"
     a += "PackageDownloadLocation: " + DocumentNamespace + "\n"
 
     #print("Ja", a) 

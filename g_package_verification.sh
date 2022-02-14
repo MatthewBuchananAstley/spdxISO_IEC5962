@@ -1,10 +1,11 @@
 #!/bin/bash -x  
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
-# 
+#
+# FileCopyrightText: <text> 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>
+#
 # PackageVerificationCode script to generate verification code
 # https://spdx.github.io/spdx-spec/package-information/#79-package-verification-code-field
-
 # Targetdir
 
 tdir=$1
