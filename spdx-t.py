@@ -116,6 +116,8 @@ def spdxdoc(self):
     for i in a.keys():
         print(i +":"+ " " + a[i] ) 
 
+    print("\n#\n#\n")
+
 
 PLicenseConcluded = ch_PackageLicenseInfoFromFiles()
 PkgLicenseConcluded = []
@@ -218,20 +220,23 @@ def spdxfiles(self):
         a10 = chklicense([ a7[-1], "FileCopyrightText:"]) 
 
         #a = { "FileName" : "./" + a7[1],
-        a = { "FileName" : "./" + a7[-1],
-                "SPDXID" : FileSPDXID.replace("_","-"),
-                "FileType" : Ftype,
-                "FileChecksum" : "SHA256: " + a1,
-                "FileChecksum_1" : "SHA1: " + a2,
-                "FileCopyrightText" : a10,
-                "LicenseInfoInFile" : a9,
-                "LicenseConcluded" : a9 }
+        #a = { "FileName" : "./" + a7[-1],
+        a = ""
+        a += "FileName: " + "./" + a7[-1] + "\n"
+        a += "SPDXID: " + FileSPDXID.replace("_","-") + "\n"
+        a += "FileType: " + Ftype + "\n"
+        a += "FileChecksum: " + "SHA256: " + a1 + "\n"
+        a += "FileChecksum: " + "SHA1: " + a2 + "\n"
+        a += "FileCopyrightText: " + a10 + "\n"
+        a += "LicenseInfoInFile: " + a9 + "\n"
+        a += "LicenseConcluded: " + a9 + "\n"
 
-        print("\n#\n#\n#\n")
+        print("#\n#\n#\n")
 
-        for i in a:
-            print(i.replace('FileChecksum_1','FileChecksum') + ":", a[i]) 
-        a = {} 
+        #for i in a:
+        #    print(i.replace('FileChecksum_1','FileChecksum') + ":", a[i]) 
+        print(a)
+        #a = {} 
 
 #d1 = checkchlog(PackageName)
 d1 = checkchlog([ PackageLoc, PackageName ])
