@@ -4,4 +4,5 @@
 #
 # FileCopyrightText: <text> 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>
 
-mimetype $1 
+#mimetype $1 
+file --mime-type $1
