@@ -1,0 +1,113 @@
+SPDXVersion: SPDX-2.2
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: spdxISO_IEC5962.spdx
+DocumentNamespace: https://github.com/MatthewBuchananAstley/spdxISO_IEC5962.git
+Creator: Person: Matthew Buchanan Astley (matthewbuchanan@astley.nl)
+Created: 2022-11-16T23:48:45Z
+CreatorComment: spdxISO_IEC5962 spdx file
+
+#
+#
+
+PackageName: spdxISO_IEC5962
+SPDXID: SPDXRef-MatthewBuchananAstley-Package-spdxISO-IEC5962
+PackageVersion: 1.0
+PackageVerificationCode: da39a3ee5e6b4b0d3255bfef95601890afd80709 (./spdxISO_IEC5962.spdx excluded )
+PackageLicenseDeclared: GPL-3.0-or-later
+PackageLicenseInfoFromFiles: LicenseRef-GPL-3.0-or-later
+PackageLicenseConcluded: LicenseRef-GPL-3.0-or-later
+PackageCopyrightText: 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl)
+PackageDownloadLocation: https://github.com/MatthewBuchananAstley/spdxISO_IEC5962.git
+
+#
+#
+#
+
+FileName: ./g_lt.py
+SPDXID: SPDXRef-g-lt.py
+FileType: APPLICATION
+FileChecksum: SHA256: a5beb5f1e6b7fe9c099e9c1439c825f26356cf2b51ebcbec5d4a315ad449712b
+FileChecksum: SHA1: f8fe2da7620293c54670c4a0bd00c05946d45728
+FileCopyrightText: 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl)
+LicenseInfoInFile: GPL-3.0-or-later
+LicenseConcluded: GPL-3.0-or-later
+
+#
+#
+#
+
+FileName: ./g_sha256sum.sh
+SPDXID: SPDXRef-g-sha256sum.sh
+FileType: APPLICATION
+FileChecksum: SHA256: ef449a05a3abb1f4d83384594b86f90a7f88e824c08c076b3ac0be1a2fd97f13
+FileChecksum: SHA1: a2d4116070843569b3c63ccbd4ecd025acfb1105
+FileCopyrightText: <text> 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>
+LicenseInfoInFile: GPL-3.0-or-later
+LicenseConcluded: GPL-3.0-or-later
+
+#
+#
+#
+
+FileName: ./g_sha1sum.sh
+SPDXID: SPDXRef-g-sha1sum.sh
+FileType: APPLICATION
+FileChecksum: SHA256: af82ae597987def08a2231bcc2c12eca7139bbd8154acb6fe9ee9257bf4aefb8
+FileChecksum: SHA1: 160d147ac583c6922b75b86c7359fb66401129dd
+FileCopyrightText: <text> 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>
+LicenseInfoInFile: GPL-3.0-or-later
+LicenseConcluded: GPL-3.0-or-later
+
+#
+#
+#
+
+FileName: ./CHANGELOG
+SPDXID: SPDXRef-CHANGELOG
+FileType: TEXT
+FileChecksum: SHA256: 4b7ba47c4e6558279d8ac936a8975326014bd9f6af055c39ad3666093f215454
+FileChecksum: SHA1: 96ca98edcf6918a9c8ca62ebafd5421aebe2aab4
+FileCopyrightText: NOASSERTION
+LicenseInfoInFile: NOASSERTION
+LicenseConcluded: NOASSERTION
+
+#
+#
+#
+
+FileName: ./g_package_verification.sh
+SPDXID: SPDXRef-g-package-verification.sh
+FileType: APPLICATION
+FileChecksum: SHA256: a7dadb7fc2a6165222ae36a0c156e80313c389f4b41c326f1da55c01aff6c441
+FileChecksum: SHA1: 9a54b5c90c3e2a8c1385b5e6b179de309eb4e5a0
+FileCopyrightText: <text> 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>
+LicenseInfoInFile: GPL-3.0-or-later
+LicenseConcluded: GPL-3.0-or-later
+
+#
+#
+#
+
+FileName: ./g_mimetype.sh
+SPDXID: SPDXRef-g-mimetype.sh
+FileType: APPLICATION
+FileChecksum: SHA256: 103924c0fe921feba754b40f059f22c2d110de217440d6bab295020244829343
+FileChecksum: SHA1: f91e745206fefe7c9a90e43ae945b4c383b32082
+FileCopyrightText: <text> 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>
+LicenseInfoInFile: GPL-3.0-or-later
+LicenseConcluded: GPL-3.0-or-later
+
+#
+#
+#
+
+FileName: ./spdx-t.py
+SPDXID: SPDXRef-spdx-t.py
+FileType: APPLICATION
+FileChecksum: SHA256: 1a90a403edffd77aa882ec6ad975b833f147be47f712e7930397bd26aca577c4
+FileChecksum: SHA1: 0c7b667c32a9ebcd4c1e338796fb69057a97a3eb
+FileCopyrightText: 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl)
+LicenseInfoInFile: GPL-3.0-or-later
+LicenseConcluded: GPL-3.0-or-later
+
