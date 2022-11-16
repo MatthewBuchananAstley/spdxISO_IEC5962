@@ -1,6 +1,6 @@
 #!/usr/bin/python3 
 #
-# SPDX-license-Identifier: GPL-3.0-or-later
+# SPDX-License-Identifier: GPL-3.0-or-later
 # PackageVersion: 1.0
 # FileCopyrightText: 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl)
 
@@ -41,7 +41,16 @@ PackageSPDXID = "SPDXRef-" + d[3] + "-" "Package" + "-" + PackageName.replace("_
 def checkchlog(self):
     #a = open(PackageName + "/CHANGELOG", "r") 
     #a = open(self + "/CHANGELOG", "r") 
-    a = open(self[0] + "/CHANGELOG", "r") 
+    try:
+        a = open(self[0] + "/CHANGELOG", "r") 
+    except FileNotFoundError:
+        a = open(self[0] + "/CHANGELOG", "w")
+        t1 = ""
+        t1 += "#" + PackageName + " changelog " + "($id$); -*-text-*-\n"
+        t1 += "\n" + PackageName + " 1.0 " + strftime("[ %Y-%m-%d ]")
+        a.write(t1)
+        a.close()
+        a = open(self[0] + "/CHANGELOG", "r") 
 
     for i in a:
         a1 = i.split()
@@ -55,9 +64,11 @@ def chklicense(self):
     #print("JAA", self) 
     try:
         #a = open( self + "/" + self[0], "r") 
-        a = open( PackageLoc + "/" + PackageName, "r") 
+        #a = open( PackageLoc + "/" + PackageName, "r") 
+        a = open( PackageLoc + "/" + self[0], "r") 
     except FileNotFoundError:
-        return("N: " + PackageName)
+        #return("N: " + PackageName)
+        return("NOASSERTION")
 
     for i in a:
         a1 = i.split(" ",2)
@@ -69,7 +80,52 @@ def chklicense(self):
                     a2 = a1[2].replace('\n','')
                     return(a2)
                 #    a2 = "GPL-3.0-or-later" 
-    return("N: " + self[0]) 
+    #return("N: " + self[0]) 
+    #return(getFirstCopyrightText(self)) 
+    return("NOASSERTION") 
+
+def getFirstCopyrightText(self):
+
+    a = glob.glob(PackageLoc + "/*")
+
+    a4 = {} 
+
+    for i in a:
+        a1 = open(i, "r") 
+        a5 = int()
+
+        try:
+            for ii in a1:
+                a2 = ii.split(" ", 2) 
+                if a2 != []:
+                    if len(a2) == 3:
+                        if a2[1] == "FileCopyrightText:":
+                            #print("Ja",i, a2[2]) 
+                            #a3 = a2[2].replace('\n'.'')
+                           
+                            a3 = a2[2].replace('\n','')
+                            a4[a3] = 1             
+        except UnicodeDecodeError:
+            next 
+    #print("Ja",a4)
+
+    a5 = [] 
+    for i in a4.keys():
+        #print("JA",i)
+        iii = i.split("-")
+        ii = iii[0].strip()
+        a5.append(ii)
+
+    a5.sort()
+    #print("Ja",a5)          
+
+    for i in a4.keys():
+        if a5[0] in i:
+            #print("Ja",i)
+            return(i)
+
+
+
 
 def ch_PackageLicenseInfoFromFiles():
     #a = glob.glob(PackageName + "/*")
@@ -79,10 +135,13 @@ def ch_PackageLicenseInfoFromFiles():
     #a3 = []
     for i in a:
         iii = i.split("/")
-        if iii[1].find(".deb") != -1:
+        #print("jAA", iii)
+        #if iii[-1].find(".deb") != -1:
+        if iii[-1].find(".deb") != -1:
+            #print("JAa",iii[-1]) 
             next
         else:
-            a3[iii[1]] = 1
+            a3[iii[-1]] = 1
 
     #print("jA",a3)
     a4 = {} 
@@ -99,7 +158,11 @@ def ch_PackageLicenseInfoFromFiles():
         a4[chklicense([i, "SPDX-License-Identifier:"])] = 1 
     #print("Ja",a3)
     #print("JaaA", a4) 
-    return(a4.keys())
+    a5 = [] 
+    for i in a4.keys():
+        a5.append(i)
+
+    return(a5)
 
 def spdxdoc(self):
 
@@ -127,6 +190,10 @@ for i in PLicenseConcluded:
     if len(ii) != 2:
         PkgLicenseConcluded.append(i)
 
+if "NOASSERTION" in PkgLicenseConcluded:
+    PkgLicenseConcluded.remove("NOASSERTION")    
+
+#print("JaAa", PkgLicenseConcluded) 
 
 #def g_FileCopyrightText(self):
 #    
@@ -136,7 +203,7 @@ for i in PLicenseConcluded:
 def spdxpackage(self):
 
     #cmd = "./g_package_verification.sh " + self[0]  
-    cmd = "/home/matthew/git_test/spdxISO_IEC5962:2021/g_package_verification.sh " + self[0]  
+    cmd = "/home/matthewbuchananastley/app/spdxISO_IEC5962/g_package_verification.sh " + self[0]  
     PackageVerificationCode = subprocess.check_output(cmd, shell=True, stderr=-3).decode().strip("\n")
     #PackageVerificationCode_1 = str(PackageVerificationCode).strip("b'").strip("\\n") + " (./" + self[0] + ".spdx" + " excluded )"
     #PackageVerificationCode_1 = str(PackageVerificationCode) + " (./" + self[0] + ".spdx" + " excluded )"
@@ -144,6 +211,9 @@ def spdxpackage(self):
     
     PLicenseConcluded = ch_PackageLicenseInfoFromFiles()
     #print("Ja", PLicenseConcluded)
+    PLicenseConcluded.remove('NOASSERTION')
+    #print("Ja", PLicenseConcluded)
+
     PkgLicenseConcluded = [] 
 
     for i in PLicenseConcluded:
@@ -158,7 +228,7 @@ def spdxpackage(self):
     a += "SPDXID: " + self[1] + "\n"
     a += "PackageVersion: " + self[2] + "\n" 
     a += "PackageVerificationCode: " + PackageVerificationCode_1 + "\n"
-    a += "PackageLicenseDeclared: " + self[3] + "\n"
+    a += "PackageLicenseDeclared: " + "GPL-3.0-or-later" + "\n"
 
     for i in PkgLicenseConcluded:
         a += "PackageLicenseInfoFromFiles: " + i + "\n"
@@ -167,7 +237,9 @@ def spdxpackage(self):
         a += "PackageLicenseConcluded: " + i + "\n"
 
     #a += "PackageCopyrightText: " + "<text> 2021 - 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>" + "\n"
-    a += "PackageCopyrightText: " + "<text> 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>" + "\n"
+    #a += "PackageCopyrightText: " + "<text> 2022 Matthew Buchanan Astley (matthewbuchanan@astley.nl) </text>" + "\n"
+    #a += "PackageCopyrightText: " + chklicense([ PackageName, "FileCopyrightText:"]) + "\n"
+    a += "PackageCopyrightText: " + getFirstCopyrightText(self) + "\n"
     a += "PackageDownloadLocation: " + DocumentNamespace + "\n"
 
     #print("Ja", a) 
@@ -178,11 +250,13 @@ def spdxpackage(self):
 
 def spdxfiles(self):
 
-    if "spdx" in self[0]: 
+    #print("JA", self) 
+
+    if ".spdx" in self[0]: 
         next
     else:
-        a1c = "/home/matthew/git_test/spdxISO_IEC5962:2021/g_sha256sum.sh " + self[0] + "|awk '{print $1}'"  
-        a2c = "/home/matthew/git_test/spdxISO_IEC5962:2021/g_sha1sum.sh " + self[0] + "|awk '{print $1}'"  
+        a1c = "/home/matthewbuchananastley/app/spdxISO_IEC5962/g_sha256sum.sh " + self[0] + "|awk '{print $1}'"  
+        a2c = "/home/matthewbuchananastley/app/spdxISO_IEC5962/g_sha1sum.sh " + self[0] + "|awk '{print $1}'"  
         #a1 = str(subprocess.check_output(a1c, shell=True, stderr=-3)).strip("b'")
         #a1 = str(subprocess.check_output(a1c, shell=True, stderr=-3)).strip("b'").strip("\\n")
         a1 = subprocess.check_output(a1c, shell=True, stderr=-3).decode().strip("\n")
@@ -190,28 +264,32 @@ def spdxfiles(self):
         #a2 = str(subprocess.check_output(a2c, shell=True, stderr=-3)).strip("b'").strip("\\n")
         a2 = subprocess.check_output(a2c, shell=True, stderr=-3).decode().strip("\n")
 
-        a3c = "/home/matthew/git_test/spdxISO_IEC5962:2021/g_mimetype.sh " + self[0] 
+        a3c = "/home/matthewbuchananastley/app/spdxISO_IEC5962/g_mimetype.sh " + self[0] 
         a3 = subprocess.check_output(a3c, shell=True, stderr=-3).decode().strip("\n")
         #print("jaaaa",a3)
         #a4 = str(a3).strip("[\\nb']")
         a5 = a3.split()
         a6 = a5[1].split("/")
         Ftype= a6[0].upper()
-        a11 = a6[1].split("-")
+        #a11 = a6[1].split("-")
+        a11 = a6[1].split(".")
         #print("JAAA", a11)
-        a12 = [ "python3", "perl" ] 
+        #a12 = [ "python3", "perl" ] 
+        a12 = [ "python", "perl", "x-shellscript" ] 
         if len(a11) == 2: 
             if a11[1] in a12:
                 Ftype = "APPLICATION"
+        elif a11[0] in a12:
+            Ftype = "APPLICATION"
 
         a7 = self[0].split("/")
    
         #FileSPDXID = "SPDXRef-" + a7[1] 
         FileSPDXID = "SPDXRef-" + a7[-1] 
-
+        #print("JAA",a7[-1])
         #a8 = chklicense([a7[1], "SPDX-License-Identifier:"]).split()
         a8 = chklicense([a7[-1], "SPDX-License-Identifier:"]).split()
-        if a8[0] == "N:":
+        if a8[0] == "NOASSERTION":
             a9 = "NOASSERTION"
         else:
             a9 = a8[0]
@@ -227,15 +305,20 @@ def spdxfiles(self):
         a += "FileType: " + Ftype + "\n"
         a += "FileChecksum: " + "SHA256: " + a1 + "\n"
         a += "FileChecksum: " + "SHA1: " + a2 + "\n"
-        a += "FileCopyrightText: " + a10 + "\n"
+        if a7[-1] == 'README.md':
+            a += "FileCopyrightText: " + getFirstCopyrightText(self) + "\n"
+        else:
+            a += "FileCopyrightText: " + a10 + "\n"
         a += "LicenseInfoInFile: " + a9 + "\n"
         a += "LicenseConcluded: " + a9 + "\n"
 
-        print("#\n#\n#\n")
+        #print("#\n#\n#\n")
 
         #for i in a:
         #    print(i.replace('FileChecksum_1','FileChecksum') + ":", a[i]) 
-        print(a)
+        if Ftype != 'INODE':
+            print("#\n#\n#\n")
+            print(a)
         #a = {} 
 
 #d1 = checkchlog(PackageName)
@@ -245,7 +328,8 @@ d1 = checkchlog([ PackageLoc, PackageName ])
 
 spdxdoc([DocumentName,DocumentNamespace,prt,CreatorComment]) 
 #spdxpackage([ PackageName, PackageSPDXID, d1, chklicense([PackageName, "SPDX-License-Identifier:"])]) 
-spdxpackage([ PackageLoc, PackageSPDXID, d1, chklicense([PackageName, "SPDX-License-Identifier:"])]) 
+#spdxpackage([ PackageLoc, PackageSPDXID, d1, chklicense([PackageName, "SPDX-License-Identifier:"])]) 
+spdxpackage([ PackageLoc, PackageSPDXID, d1, "SPDX-License-Identifier:"]) 
 #print("#\n#\n")
 
 ch_PackageLicenseInfoFromFiles()
@@ -253,6 +337,7 @@ ch_PackageLicenseInfoFromFiles()
 #e1 = glob.glob(PackageName + "/*")
 e1 = glob.glob( PackageLoc + "/*")
 for i in e1:
+    #print("JA",i) 
     if i.find(".deb") != -1:
         next
     else:
