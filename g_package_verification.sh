@@ -1,4 +1,4 @@
-#!/bin/bash -x  
+#!/bin/bash  
 #
 # SPDX-License-Identifier: GPL-3.0-or-later
 #
@@ -8,12 +8,12 @@
 # https://spdx.github.io/spdx-spec/package-information/#79-package-verification-code-field
 # Targetdir
 
-tdir=$1
+tdir=~/app/$1
 tempfile=$(mktemp tempf.XXX)
 tempfile_1=$(mktemp tempf_1.XXX)
 
 if [ -d "$tdir" ] ; then 
-	sha1sum $tdir/* | egrep -v 'spdx|deb' | awk '{print $1}' | sort > $tempfile
+	sha1sum $tdir/* 2>/dev/null | egrep -v 'spdx|deb' | awk '{print $1}' | sort > $tempfile
 	sed -z s/\\n//g $tempfile > $tempfile_1 
 	sha1sum $tempfile_1 | awk '{print $1}' 
 	rm -rf $tempfile
